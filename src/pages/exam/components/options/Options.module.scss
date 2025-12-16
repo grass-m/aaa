@@ -1,0 +1,16 @@
+
+.title {
+  font-size: 16px;
+}
+.myAnswer {
+  padding-top: 10px;
+}
+.result {
+  padding: 10px 0; 
+  &.red {
+    color:  red;
+  }
+  &.green {
+    color: green;
+  }
+}

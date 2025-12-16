@@ -1,14 +1,29 @@
-import{ useEffect, useState } from 'react'
+import{ useEffect, useRef, useState } from 'react'
 import { getQuestion, type Question } from '../../services'
-import { Radio, type RadioChangeEvent } from 'antd'
 import style from './Exam.module.scss'
+import Options from './components/options/Options'
+import AnswerCard from './components/answerCard/AnswerCard'
+import Modal from 'antd/es/modal/Modal'
+import { useNavigate } from 'react-router-dom'
+
+export type NewQuestion = Question & {myAnswer?: Question['result']}
 
 const Exam = () => {
-  const [question, setQuestion] = useState<Question[]>([])
-  const [value, setValue] = useState(-1)
-  const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+  const [question, setQuestion] = useState<NewQuestion[]>([])
+  const [finish, setFinish] = useState(false)
+  const [total, setTotal] = useState(0)
+  const [show, setShow] = useState(false)
+  const navigate = useNavigate()
+  const cardScroll = useRef<HTMLUListElement | null>(null)
+
+  const onSubmit = () => {
+    setFinish(true)
+    setTotal(question.reduce((prev, item) => {
+      return prev + (item.myAnswer === item.result ? item.score : 0)
+    }, 0))
+    setShow(true)
   }
+
 
   useEffect(() => {
     const getData = async () => {
@@ -25,29 +40,47 @@ const Exam = () => {
 
   return (
     <div className={style.exam}>
-      <h3>单选题</h3>
-      <ul>
-        {question.map((item, index) => 
-          <li key={item.question}>
-            <h3 className={style.title}>{index + 1}.{item.question}</h3>
-            <Radio.Group
-              vertical
-              onChange={onChange}
-              value={value}
-            >
-              {item.options.map((option, optIndex) => (
-                <Radio 
-                  key={optIndex} 
-                  value={optIndex}
-                  className={style.radioButton}
-                >
-                  {String.fromCharCode(65 + optIndex)}. {option}
-                </Radio>
-              ))}
-            </Radio.Group>
-          </li>
-        )}
-      </ul>
+      <div className={style.left}>
+        <h3>单选题</h3>
+        <ul className={style.list} ref={cardScroll}>
+          {question.map((item, index) => 
+            <Options
+              key={item.question}
+              title={`${index + 1}. ${item.question}`}
+              options={item.options}
+              result={item.result}
+              myAnswer={item.myAnswer}
+              finish={finish}
+              onChange={value => {
+                const newQuestions = [...question]
+                newQuestions[index].myAnswer = value
+                setQuestion(newQuestions)
+              }}
+            />
+          )}
+        </ul>
+      </div>
+      <AnswerCard
+        finish={finish}
+        onSubmit={onSubmit}
+        question={question}
+        goFloor={index => {
+          document.documentElement.scrollTop = (cardScroll.current?.children[index] as HTMLUListElement).offsetTop
+        }}
+      />
+      <Modal
+        title="提交成功"
+        closable={{ 'aria-label': 'Custom Close Button' }}
+        open={show}
+        onOk={() => navigate('/history', {replace: true})}
+        okText="考试记录"
+        cancelText="关闭弹窗"
+        onCancel={() => {
+          setShow(false)
+        }}
+      >
+        <div>成绩：{total}</div>
+      </Modal>
     </div>
   )
 }
