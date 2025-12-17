@@ -1,29 +1,41 @@
 import{ useEffect, useRef, useState } from 'react'
 import { getQuestion, type Question } from '../../services'
 import style from './Exam.module.scss'
-import Options from './components/options/Options'
+import Options from '../../components/options/Options'
 import AnswerCard from './components/answerCard/AnswerCard'
 import Modal from 'antd/es/modal/Modal'
 import { useNavigate } from 'react-router-dom'
-
-export type NewQuestion = Question & {myAnswer?: Question['result']}
+import { useDispatch } from 'react-redux'
+import type { RootDispatch } from '@/store'
+import { addData } from '@/store/features/history'
 
 const Exam = () => {
-  const [question, setQuestion] = useState<NewQuestion[]>([])
+  const [question, setQuestion] = useState<Question[]>([])
   const [finish, setFinish] = useState(false)
   const [total, setTotal] = useState(0)
   const [show, setShow] = useState(false)
   const navigate = useNavigate()
   const cardScroll = useRef<HTMLUListElement | null>(null)
-
+  const dispatch: RootDispatch = useDispatch()
+  
   const onSubmit = () => {
-    setFinish(true)
-    setTotal(question.reduce((prev, item) => {
+    const totalScore =  question.reduce((prev, item) => {
       return prev + (item.myAnswer === item.result ? item.score : 0)
-    }, 0))
+    }, 0)
+    const correctCount = question.filter(v => v.myAnswer === v.result).length
+    console.log(correctCount)
+    setFinish(true)
+    setTotal(totalScore)
     setShow(true)
+    dispatch(addData({
+      list: question,
+      id: Date.now(),
+      finishTime: Date.now(),
+      score: totalScore,
+      errorCount: question.length - correctCount,
+      correctCount
+    }))
   }
-
 
   useEffect(() => {
     const getData = async () => {

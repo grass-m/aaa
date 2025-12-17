@@ -4,6 +4,11 @@ import { format } from "../utils"
 export const useCountDown = (s: number, immediate: boolean = false, onFinish?:() => void) => {
   const [second, setSecond] = useState(s)
   const timeId = useRef<number | null>(null)
+  const onFinishCallback = useRef(onFinish)
+
+  useEffect(() => {
+    onFinishCallback.current = onFinish
+  }, [onFinish])
 
   const start = () => {
     timeId.current = setInterval(() => {
@@ -11,7 +16,7 @@ export const useCountDown = (s: number, immediate: boolean = false, onFinish?:()
         const curSecond = s -1
         if (curSecond === 0) {
           stop()
-          onFinish?.()
+          onFinishCallback.current?.()
         }
         return curSecond
       })

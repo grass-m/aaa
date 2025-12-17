@@ -1,12 +1,12 @@
 import { Card, Button } from "antd"
 import style from './AnswerCard.module.scss'
-import type { NewQuestion } from "../../Exam"
 import { useCountDown } from '../../../../hooks/useCountDown'
 import { useNavigate } from "react-router-dom"
 import classNames from "classnames"
+import { type Question } from "@/services"
 
 interface Props {
-  question: NewQuestion[]
+  question: Question[]
   finish: boolean
   onSubmit: () => void
   goFloor: (index: number) => void
@@ -20,9 +20,7 @@ const AnswerCard: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate()
 
-  const {timeStr, stop} = useCountDown(10, false, () => {
-    onSubmit()
-  })
+  const {timeStr, stop} = useCountDown(10, true, onSubmit)
 
   const onFinish = () => {
     stop()
@@ -35,7 +33,7 @@ const AnswerCard: React.FC<Props> = ({
     ]
     return finish ? [
       ...actions,
-      <Button type="default" onClick={() => navigate('/history', {replace: true})}>考试记录</Button>
+      <Button type="primary" onClick={() => navigate('/history', {replace: true})}>考试记录</Button>
     ] : actions
   }
 

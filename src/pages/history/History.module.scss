@@ -1,0 +1,74 @@
+.box {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px 100px;
+}
+.title {
+  height: 111px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  padding: 24px;
+  p {
+    font-size: 24px;
+  }
+}
+%top_margin {
+  margin-top: 5px;
+}
+.exam_count {
+  color: rgb(24, 144, 255);
+  @extend %top_margin;
+}
+.average {
+  color: rgb(82, 196, 26);
+  @extend %top_margin;
+}
+.top_score {
+  color: rgb(250, 173, 20);
+  @extend %top_margin;
+}
+.min_score {
+  color: rgb(255, 77, 79);
+  @extend %top_margin;
+}
+
+.columns_score {
+  background: rgb(255, 77, 79);
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 4px 12px;
+}
+.error_count {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(255, 77, 79);
+  background-color: #fff;
+}
+.correct_count {
+  @extend .error_count;
+  color: rgb(82, 196, 26);
+}
+
+.customScore{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.customAction {
+  @extend .customScore;
+}
+.customTotal {
+  @extend .customScore;
+}
+.customCorrect_count {
+   @extend .customScore;
+}
+.customError_count {
+   @extend .customScore;
+}
+.customTitle {
+   @extend .customScore;
+}

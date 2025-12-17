@@ -5,6 +5,7 @@ export type Question = {
   options: string[]
   result: 'A' | 'B' | 'C' | 'D'
   score: number
+  myAnswer?: 'A' | 'B' | 'C' | 'D'
 }
 
 export const getQuestion = () => {

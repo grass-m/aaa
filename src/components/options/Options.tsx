@@ -1,4 +1,4 @@
-import type { Question } from '../../../../services'
+import type { Question } from '../../services'
 import style from './Options.module.scss'
 import { Radio, Tag } from 'antd'
 import classNames from 'classnames'

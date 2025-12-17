@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import user from './features/user'
-import player from './features/player'
+import history from './features/history'
 
 const store = configureStore({
   reducer: {
-    user,
-    player
+    history
   }
 })
 
