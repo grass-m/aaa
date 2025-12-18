@@ -1,0 +1,75 @@
+
+.box {
+  border: 1px solid rgb(240, 240, 240);
+  padding: 24px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .titleTag {
+    color: #cf1322;;
+    background: #fff1f0;
+    border-color: #ffa39e;
+    font-weight: normal;
+    margin-right: 10px;
+  }
+  .scoreTag {
+    color: #0958d9;
+    background: #e6f4ff;
+    border-color: #91caff;
+    font-weight: normal;
+  }
+}
+
+.group {
+  margin-bottom: 10px;
+  label {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: rgb(250, 250, 250);
+    border: 1px solid rgb(217, 217, 217);
+    margin-bottom: 5px;
+    .label_item {
+      margin-left: 10px;
+    }
+  }
+  .label_correct {
+    background: rgb(246, 255, 237) !important;
+    border: 1px solid rgb(183, 235, 143) !important;
+    font-weight: bold;
+    color: rgb(82, 196, 26);
+  }
+  .label_myAnswer {
+    background: rgb(255, 242, 240) !important;
+    border: 1px solid rgb(255, 204, 199) !important;
+    font-weight: bold;
+    color: rgb(255, 77, 79);
+  }
+}
+
+.result {
+  display: flex;
+  gap: 24px;
+  padding: 12px 16px;
+  background: rgb(245, 245, 245);
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.red {
+  color:  rgb(255, 77, 79);
+  font-weight: bold;
+}
+.green {
+  color: rgb(82, 196, 26);
+  font-weight: bold;
+}
