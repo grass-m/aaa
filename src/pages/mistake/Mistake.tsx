@@ -1,4 +1,4 @@
-import Options from '@/components/options/Options'
+import MisItem from './components/MisItem'
 import type { RootState } from '@/store'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
@@ -32,13 +32,15 @@ const Mistake = () => {
         <Button onClick={() => navigate('/history')}>返回记录</Button>
       </Flex>
       {mistakeInfo?.map((item, index) => 
-        <Options 
+        <MisItem 
           key={item.question}
-          title={index + 1 + '' + item.question}
+          title={index + 1 + '.' + item.question}
           options={item.options}
           result={item.result}
           myAnswer={item.myAnswer}
+          score={item.score}
           finish
+          mistake
         />
       )}
     </div>

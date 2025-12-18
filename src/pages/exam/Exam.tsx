@@ -1,7 +1,7 @@
 import{ useEffect, useRef, useState } from 'react'
 import { getQuestion, type Question } from '../../services'
 import style from './Exam.module.scss'
-import Options from '../../components/options/Options'
+import Options from './components/options/Options'
 import AnswerCard from './components/answerCard/AnswerCard'
 import Modal from 'antd/es/modal/Modal'
 import { useNavigate } from 'react-router-dom'

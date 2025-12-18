@@ -1,5 +1,11 @@
 import { Flex, Button, Tag, Row, Col, Table, type TableProps } from "antd"
-import { ContainerOutlined, TrophyOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { 
+  ContainerOutlined, 
+  TrophyOutlined, 
+  CheckCircleOutlined, 
+  CloseCircleOutlined,
+  MehOutlined 
+} from '@ant-design/icons'
 import { useNavigate } from "react-router-dom"
 import style from './History.module.scss'
 import { useSelector } from "react-redux"
@@ -102,7 +108,8 @@ const History = () => {
         </h2>
         <Button onClick={() => navigate('/')}>返回首页</Button>
       </Flex>
-      <Row gutter={16} style={{marginBottom: 20}}>
+      {historyInfo.length ? 
+        <Row gutter={16} style={{marginBottom: 20}}>
         <Col span={6}>
           <div className={style.title}>
             考试次数
@@ -130,11 +137,23 @@ const History = () => {
             <p className={style.min_score}>{minScore} 分</p>
           </div>
         </Col>
-      </Row>
+      </Row> : null
+      }
       <Table 
         columns={Columns}
         dataSource={historyInfo}
         rowKey={row => row.id}
+        locale={{
+          emptyText: <div className={style.customEmpty}>
+            <MehOutlined style={{fontSize: 50, marginBottom: 20, marginTop: 50}} />
+            <p style={{marginBottom: 20}}>暂无考试记录，快去答题吧~</p>
+            <Button 
+              style={{marginBottom: 50}}
+              type="primary"
+              onClick={() => navigate('/exam')}
+            >开始考试</Button>
+          </div>
+        }}
       />
     </div>
   )
